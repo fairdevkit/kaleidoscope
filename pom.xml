@@ -40,6 +40,12 @@
         </license>
     </licenses>
 
+    <modules>
+        <module>kaleidoscope-model</module>
+        <module>kaleidoscope-api</module>
+        <module>kaleidoscope-shacl</module>
+    </modules>
+
     <distributionManagement>
         <snapshotRepository>
             <id>github</id>
