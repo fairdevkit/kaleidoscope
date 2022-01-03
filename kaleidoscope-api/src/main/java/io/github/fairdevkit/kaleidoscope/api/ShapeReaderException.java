@@ -21,26 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.github.fairdevkit.kaleidoscope.shacl;
+package io.github.fairdevkit.kaleidoscope.api;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.eclipse.rdf4j.model.Resource;
-
-public class NodeShape extends Shape implements io.github.fairdevkit.kaleidoscope.model.Shape {
-    private final List<PropertyShape> property;
-
-    public NodeShape(Resource identifier) {
-        super(identifier);
-
-        property = new ArrayList<>();
+public abstract class ShapeReaderException extends RuntimeException {
+    public ShapeReaderException(String message) {
+        super(message);
     }
 
-    public List<PropertyShape> getProperty() {
-        return property;
-    }
-
-    public void addProperty(PropertyShape property) {
-        this.property.add(property);
+    public ShapeReaderException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

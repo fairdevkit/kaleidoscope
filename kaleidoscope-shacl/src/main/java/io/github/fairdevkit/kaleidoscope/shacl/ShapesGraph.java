@@ -23,24 +23,44 @@
  */
 package io.github.fairdevkit.kaleidoscope.shacl;
 
+import io.github.fairdevkit.kaleidoscope.model.ShapeGraph;
 import java.util.ArrayList;
-import java.util.List;
-import org.eclipse.rdf4j.model.Resource;
+import java.util.Collection;
+import org.eclipse.rdf4j.model.IRI;
+import org.eclipse.rdf4j.model.Namespace;
 
-public class NodeShape extends Shape implements io.github.fairdevkit.kaleidoscope.model.Shape {
-    private final List<PropertyShape> property;
+public class ShapesGraph implements ShapeGraph {
+    private final Collection<Namespace> namespaces;
+    private final Collection<IRI> imports;
+    private final Collection<Shape> shapes;
 
-    public NodeShape(Resource identifier) {
-        super(identifier);
-
-        property = new ArrayList<>();
+    public ShapesGraph() {
+        namespaces = new ArrayList<>();
+        imports = new ArrayList<>();
+        shapes = new ArrayList<>();
     }
 
-    public List<PropertyShape> getProperty() {
-        return property;
+    public Collection<Namespace> getNamespaces() {
+        return namespaces;
     }
 
-    public void addProperty(PropertyShape property) {
-        this.property.add(property);
+    public void addNamespace(Namespace namespace) {
+        this.namespaces.add(namespace);
+    }
+
+    public Collection<IRI> getImports() {
+        return imports;
+    }
+
+    public void addImport(IRI _import) {
+        imports.add(_import);
+    }
+
+    public Collection<Shape> getShapes() {
+        return shapes;
+    }
+
+    public void addShape(Shape shape) {
+        shapes.add(shape);
     }
 }

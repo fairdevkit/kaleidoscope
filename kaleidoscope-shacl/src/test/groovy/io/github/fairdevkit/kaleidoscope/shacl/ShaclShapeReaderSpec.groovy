@@ -21,26 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.github.fairdevkit.kaleidoscope.shacl;
+package io.github.fairdevkit.kaleidoscope.shacl
 
-import java.util.ArrayList;
-import java.util.List;
-import org.eclipse.rdf4j.model.Resource;
+import org.eclipse.rdf4j.model.vocabulary.SHACL
+import spock.lang.Specification
+import java.nio.file.Files
+import java.nio.file.Path
 
-public class NodeShape extends Shape implements io.github.fairdevkit.kaleidoscope.model.Shape {
-    private final List<PropertyShape> property;
+class ShaclShapeReaderSpec extends Specification {
+    /** System under test */
+    def reader = new ShaclShapeReader()
 
-    public NodeShape(Resource identifier) {
-        super(identifier);
-
-        property = new ArrayList<>();
+    // convenience closure
+    def fixture = { name ->
+        Files.newInputStream(Path.of("src/test/resources/fixtures/shacl/${name}.ttl"))
     }
 
-    public List<PropertyShape> getProperty() {
-        return property;
-    }
+    def "test"() {
+        given:
+        def fixture = fixture "example-shape"
 
-    public void addProperty(PropertyShape property) {
-        this.property.add(property);
+        when:
+        def shapesGraph = reader.read fixture
+
+        then:
+        with (shapesGraph.shapes.first()) {
+            with (property.first()) {
+                nodeKind.get() == SHACL.LITERAL
+            }
+        }
     }
 }
