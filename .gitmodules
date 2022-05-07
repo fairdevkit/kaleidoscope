@@ -1,0 +1,3 @@
+[submodule "kaleidoscope-shex/src/main/antlr4/io/shex"]
+	path = kaleidoscope-shex/src/main/antlr4/io/shex
+	url = https://github.com/shexSpec/grammar

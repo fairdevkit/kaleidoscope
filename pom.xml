@@ -44,6 +44,7 @@
         <module>kaleidoscope-model</module>
         <module>kaleidoscope-api</module>
         <module>kaleidoscope-shacl</module>
+        <module>kaleidoscope-shex</module>
     </modules>
 
     <distributionManagement>
