@@ -21,47 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.github.fairdevkit.kaleidoscope.shacl;
+package io.github.fairdevkit.kaleidoscope.shacl.path;
 
-import io.github.fairdevkit.kaleidoscope.model.ShapeGraph;
 import java.util.ArrayList;
-import java.util.Collection;
-import org.eclipse.rdf4j.model.IRI;
-import org.eclipse.rdf4j.model.Namespace;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import org.eclipse.rdf4j.model.Model;
+import org.eclipse.rdf4j.model.Resource;
+import org.eclipse.rdf4j.model.Value;
 
-public class ShapesGraph implements ShapeGraph<Shape> {
-    private final Collection<Namespace> namespaces;
-    private final Collection<IRI> imports;
-    private final Collection<Shape> shapes;
+public class SequencePath implements PropertyPath<List<PropertyPath<?>>> {
+    private final List<PropertyPath<?>> sequence;
 
-    public ShapesGraph() {
-        namespaces = new ArrayList<>();
-        imports = new ArrayList<>();
-        shapes = new ArrayList<>();
-    }
-
-    public Collection<Namespace> getNamespaces() {
-        return namespaces;
-    }
-
-    public void addNamespace(Namespace namespace) {
-        this.namespaces.add(namespace);
-    }
-
-    public Collection<IRI> getImports() {
-        return imports;
-    }
-
-    public void addImport(IRI _import) {
-        imports.add(_import);
+    public SequencePath() {
+        sequence = new ArrayList<>();
     }
 
     @Override
-    public Collection<Shape> getShapes() {
-        return shapes;
+    public List<PropertyPath<?>> getPath() {
+        return sequence;
     }
 
-    public void addShape(Shape shape) {
-        shapes.add(shape);
+    public void addPath(PropertyPath<?> path) {
+        sequence.add(path);
+    }
+
+    @Override
+    public Set<Value> resolve(Model model, Resource focusNode) {
+        var nodes = Set.<Value>of(focusNode);
+
+        for (var path : sequence) {
+            var nextNodes = new HashSet<Value>();
+            for (var node : nodes) {
+                nextNodes.addAll(path.resolve(model, (Resource)node));
+            }
+            nodes = nextNodes;
+        }
+
+        return nodes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof SequencePath p) {
+            return Objects.equals(sequence, p.sequence);
+        }
+        return false;
     }
 }

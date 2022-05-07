@@ -21,10 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.github.fairdevkit.kaleidoscope.model;
+package io.github.fairdevkit.kaleidoscope.shacl.path;
 
-import java.util.Collection;
+import java.util.Objects;
+import java.util.Set;
+import org.eclipse.rdf4j.model.Model;
+import org.eclipse.rdf4j.model.Resource;
+import org.eclipse.rdf4j.model.Value;
 
-public interface ShapeGraph<S extends Shape> {
-    Collection<S> getShapes();
+public class ZeroOrMorePath implements PropertyPath<PropertyPath<?>> {
+    private PropertyPath<?> zeroOrMore;
+
+    @Override
+    public PropertyPath<?> getPath() {
+        return zeroOrMore;
+    }
+
+    public void setPath(PropertyPath<?> path) {
+        zeroOrMore = path;
+    }
+
+    @Override
+    public Set<Value> resolve(Model model, Resource focusNode) {
+        @SuppressWarnings("unchecked")
+        var nodes = (Set<Value>)zeroOrMore.resolve(model, focusNode);
+
+        for (var node : nodes) {
+            nodes.addAll(resolve(model, (Resource)node));
+        }
+
+        return nodes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof ZeroOrMorePath p) {
+            return Objects.equals(zeroOrMore, p.zeroOrMore);
+        }
+        return false;
+    }
 }

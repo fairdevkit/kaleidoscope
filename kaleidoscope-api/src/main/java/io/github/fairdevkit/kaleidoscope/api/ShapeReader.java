@@ -27,9 +27,14 @@ import io.github.fairdevkit.kaleidoscope.model.Shape;
 import io.github.fairdevkit.kaleidoscope.model.ShapeGraph;
 import java.io.IOException;
 import java.io.InputStream;
+import javax.annotation.Nullable;
 
-public interface ShapeReader {
-    ShapeGraph read(InputStream source) throws IOException;
+public interface ShapeReader<S extends Shape> {
+    ShapeGraph<S> read(InputStream source) throws IOException;
 
-    Shape read(InputStream source, String subject) throws IOException;
+    ShapeGraph<S> read(InputStream source, @Nullable String base) throws IOException;
+
+    S readShape(InputStream source, String subject) throws IOException;
+
+    S readShape(InputStream source, String subject, @Nullable String base) throws IOException;
 }

@@ -68,20 +68,21 @@
         <license-plugin.version>4.1</license-plugin.version>
 
         <!-- compile/provided dependencies -->
-        <spotbugs.version>4.5.2</spotbugs.version>
+        <rdf4j.version>4.0.0</rdf4j.version>
+        <spotbugs.version>4.7.0</spotbugs.version>
 
         <!-- test dependencies -->
-        <groovy.version>3.0.9</groovy.version>
-        <spock.version>2.1-M2-groovy-3.0</spock.version>
+        <groovy.version>4.0.2</groovy.version>
+        <spock.version>2.2-M1-groovy-4.0</spock.version>
         <gmavenplus.version>1.13.1</gmavenplus.version>
-        <surefire.version>3.0.0-M5</surefire.version>
+        <surefire.version>3.0.0-M6</surefire.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <!-- test -->
             <dependency>
-                <groupId>org.codehaus.groovy</groupId>
+                <groupId>org.apache.groovy</groupId>
                 <artifactId>groovy</artifactId>
                 <version>${groovy.version}</version>
                 <scope>test</scope>

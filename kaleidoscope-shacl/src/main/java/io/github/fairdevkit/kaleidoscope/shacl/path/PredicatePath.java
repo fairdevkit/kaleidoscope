@@ -21,10 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.github.fairdevkit.kaleidoscope.model;
+package io.github.fairdevkit.kaleidoscope.shacl.path;
 
-import java.util.Collection;
+import java.util.Objects;
+import java.util.Set;
+import org.eclipse.rdf4j.model.IRI;
+import org.eclipse.rdf4j.model.Model;
+import org.eclipse.rdf4j.model.Resource;
+import org.eclipse.rdf4j.model.Value;
+import org.eclipse.rdf4j.model.util.Models;
 
-public interface ShapeGraph<S extends Shape> {
-    Collection<S> getShapes();
+public class PredicatePath implements PropertyPath<IRI> {
+    private final IRI path;
+    private final boolean inverse;
+
+    public PredicatePath(IRI path, boolean inverse) {
+        this.path = path;
+        this.inverse = inverse;
+    }
+
+    @Override
+    public IRI getPath() {
+        return path;
+    }
+
+    @Override
+    public Set<? extends Value> resolve(Model model, Resource focusNode) {
+        if (inverse) {
+            return model.filter(null, path, focusNode).subjects();
+        } else {
+            return Models.getProperties(model, focusNode, path);
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof PredicatePath p) {
+            return Objects.equals(path, p.path)
+                && Objects.equals(inverse, p.inverse);
+        }
+        return false;
+    }
 }

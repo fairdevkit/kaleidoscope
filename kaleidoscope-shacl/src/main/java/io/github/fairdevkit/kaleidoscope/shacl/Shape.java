@@ -35,6 +35,12 @@ import org.eclipse.rdf4j.model.Value;
 public class Shape implements io.github.fairdevkit.kaleidoscope.model.Shape {
     private final Resource identifier;
 
+    /* Targets */
+    private final List<Value> nodeTargets;
+    private final List<IRI> classBasedTargets;
+    private final List<IRI> implicitClassTargets;
+    private final List<IRI> subjectsOfTargets;
+    private final List<IRI> objectsOfTargets;
     /* Declaring the Severity of a Shape */
     @Nullable private IRI severity;
     /* Declaring Messages for a Shape */
@@ -66,6 +72,7 @@ public class Shape implements io.github.fairdevkit.kaleidoscope.model.Shape {
     private final List<Shape> xone;
     /* Shape-based Constraint Components */
     private final List<Shape> node;
+    private final List<PropertyShape> property;
     /* Other Constraint Components */
     private boolean closed;
     private final List<IRI> ignoredProperties;
@@ -75,6 +82,11 @@ public class Shape implements io.github.fairdevkit.kaleidoscope.model.Shape {
     public Shape(Resource identifier) {
         this.identifier = identifier;
 
+        nodeTargets = new ArrayList<>();
+        classBasedTargets = new ArrayList<>();
+        implicitClassTargets = new ArrayList<>();
+        subjectsOfTargets = new ArrayList<>();
+        objectsOfTargets = new ArrayList<>();
         message = new ArrayList<>();
         _class = new ArrayList<>();
         languageIn = new ArrayList<>();
@@ -84,12 +96,53 @@ public class Shape implements io.github.fairdevkit.kaleidoscope.model.Shape {
         or = new ArrayList<>();
         xone = new ArrayList<>();
         node = new ArrayList<>();
+        property = new ArrayList<>();
         ignoredProperties = new ArrayList<>();
         in = new ArrayList<>();
     }
 
     public Resource getIdentifier() {
         return identifier;
+    }
+
+    public List<Value> getNodeTargets() {
+        return nodeTargets;
+    }
+
+    public void addNodeTarget(Value target) {
+        nodeTargets.add(target);
+    }
+
+    public List<IRI> getClassBasedTargets() {
+        return classBasedTargets;
+    }
+
+    public void addClassBasedTarget(IRI target) {
+        classBasedTargets.add(target);
+    }
+
+    public List<IRI> getImplicitClassTargets() {
+        return implicitClassTargets;
+    }
+
+    public void addImplicitClassTargets(IRI target) {
+        implicitClassTargets.add(target);
+    }
+
+    public List<IRI> getSubjectsOfTargets() {
+        return subjectsOfTargets;
+    }
+
+    public void addSubjectsOfTarget(IRI target) {
+        subjectsOfTargets.add(target);
+    }
+
+    public List<IRI> getObjectsOfTargets() {
+        return objectsOfTargets;
+    }
+
+    public void addObjectsOfTarget(IRI target) {
+        objectsOfTargets.add(target);
     }
 
     public Optional<IRI> getSeverity() {
@@ -266,6 +319,14 @@ public class Shape implements io.github.fairdevkit.kaleidoscope.model.Shape {
 
     public void addNode(Shape node) {
         this.node.add(node);
+    }
+
+    public List<PropertyShape> getProperty() {
+        return property;
+    }
+
+    public void addProperty(PropertyShape property) {
+        this.property.add(property);
     }
 
     public boolean isClosed() {

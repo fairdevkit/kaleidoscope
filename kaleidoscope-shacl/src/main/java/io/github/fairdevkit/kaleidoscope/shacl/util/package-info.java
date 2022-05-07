@@ -21,10 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.github.fairdevkit.kaleidoscope.model;
 
-import java.util.Collection;
-
-public interface ShapeGraph<S extends Shape> {
-    Collection<S> getShapes();
-}
+@javax.annotation.ParametersAreNonnullByDefault
+package io.github.fairdevkit.kaleidoscope.shacl.util;

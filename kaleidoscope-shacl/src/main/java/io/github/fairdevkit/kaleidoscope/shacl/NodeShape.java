@@ -23,24 +23,10 @@
  */
 package io.github.fairdevkit.kaleidoscope.shacl;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.eclipse.rdf4j.model.Resource;
 
 public class NodeShape extends Shape implements io.github.fairdevkit.kaleidoscope.model.Shape {
-    private final List<PropertyShape> property;
-
     public NodeShape(Resource identifier) {
         super(identifier);
-
-        property = new ArrayList<>();
-    }
-
-    public List<PropertyShape> getProperty() {
-        return property;
-    }
-
-    public void addProperty(PropertyShape property) {
-        this.property.add(property);
     }
 }

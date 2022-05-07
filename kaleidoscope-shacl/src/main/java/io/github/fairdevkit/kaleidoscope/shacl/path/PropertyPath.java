@@ -21,10 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.github.fairdevkit.kaleidoscope.model;
+package io.github.fairdevkit.kaleidoscope.shacl.path;
 
-import java.util.Collection;
+import java.util.Set;
+import org.eclipse.rdf4j.model.IRI;
+import org.eclipse.rdf4j.model.Model;
+import org.eclipse.rdf4j.model.Resource;
+import org.eclipse.rdf4j.model.Value;
 
-public interface ShapeGraph<S extends Shape> {
-    Collection<S> getShapes();
+public interface PropertyPath<T> {
+    T getPath();
+
+    Set<? extends Value> resolve(Model model, Resource focusNode);
 }

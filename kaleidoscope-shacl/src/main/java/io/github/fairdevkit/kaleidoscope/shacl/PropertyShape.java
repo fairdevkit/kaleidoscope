@@ -23,10 +23,10 @@
  */
 package io.github.fairdevkit.kaleidoscope.shacl;
 
+import io.github.fairdevkit.kaleidoscope.shacl.path.PropertyPath;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
 import javax.annotation.Nullable;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Literal;
@@ -34,6 +34,8 @@ import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.Value;
 
 public class PropertyShape extends Shape implements io.github.fairdevkit.kaleidoscope.model.PropertyShape {
+    /* SHACL Property Paths */
+    private PropertyPath<?> path;
     /* Non-Validating Property Shape Characteristics */
     private final List<Literal> name;
     private final List<Literal> description;
@@ -41,8 +43,8 @@ public class PropertyShape extends Shape implements io.github.fairdevkit.kaleido
     @Nullable private Resource group;
     @Nullable private Value defaultValue;
     /* Cardinality Constraint Components */
-    private int minCount;
-    private int maxCount;
+    private Integer minCount;
+    private Integer maxCount;
     /* String-based Constraint Components */
     @Nullable private Boolean uniqueLang;
     /* Property Pair Constraint Components */
@@ -61,6 +63,14 @@ public class PropertyShape extends Shape implements io.github.fairdevkit.kaleido
         description = new ArrayList<>();
         lessThan = new ArrayList<>();
         lessThanOrEquals = new ArrayList<>();
+    }
+
+    public PropertyPath<?> getPath() {
+        return path;
+    }
+
+    public void setPath(PropertyPath<?> path) {
+        this.path = path;
     }
 
     public List<Literal> getName() {
@@ -103,12 +113,20 @@ public class PropertyShape extends Shape implements io.github.fairdevkit.kaleido
         this.defaultValue = defaultValue;
     }
 
-    public int getMinCount() {
-        return minCount; // TODO: boxed and optional?
+    public Optional<Integer> getMinCount() {
+        return Optional.ofNullable(minCount);
     }
 
-    public int getMaxCount() {
-        return maxCount; // TODO: boxed and optional?
+    public void setMinCount(int minCount) {
+        this.minCount = minCount;
+    }
+
+    public Optional<Integer> getMaxCount() {
+        return Optional.ofNullable(maxCount);
+    }
+
+    public void setMaxCount(int maxCount) {
+        this.maxCount = maxCount;
     }
 
     public Optional<Boolean> isUniqueLang() {
